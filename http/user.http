@@ -1,0 +1,29 @@
+@baseURL = http://localhost:7100/api
+
+# 用户注册
+POST {{baseURL}}/users/register
+Content-Type: application/json
+
+{
+  "username": "admin2",
+  "email": "admin@qq.com",
+  "password": "123456"
+}
+
+### 用户登录
+POST {{baseURL}}/users/login
+Content-Type: application/json
+
+{
+  "username": "admin2",
+  "password": "123456"
+}
+
+### 获取用户信息（需要鉴权）
+@token = <登录接口返回的token>
+GET {{baseURL}}/users/me
+Authorization: Bearer {{token}}
+
+### 获取用户列表（需要鉴权）
+GET {{baseURL}}/users/list
+Authorization: Bearer {{token}}

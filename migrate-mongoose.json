@@ -1,0 +1,7 @@
+{
+  "dbConnectionUri": "$MONGODB_URI",
+  "migrationsDir": "migrations",
+  "templateFile": "migrations/template.js",
+  "changelogCollectionName": "changelog",
+  "autosync": false
+}

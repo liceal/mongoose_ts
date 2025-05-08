@@ -1,0 +1,43 @@
+@baseURL = http://localhost:7100/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFjMWI4MGIyMGEyNmY1MjBlMGE4YmIiLCJpYXQiOjE3NDY2ODcxODgsImV4cCI6MTc0NjcxNTk4OH0.TiPz2iqqTCpO-x15_OFEIqpZCCXHcY2LUfw7JL8rbW0
+
+### 创建部门
+POST {{baseURL}}/dept/create
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "测试部门4",
+  "parentId": "681c36c95f49e53c01054d93",
+  "desc": "测试部门描述"
+}
+
+
+### 获取部门
+GET {{baseURL}}/dept/get/681c36e25f49e53c01054d95
+Authorization: {{token}}
+
+### 更新部门
+PUT {{baseURL}}/dept/update/681c36e25f49e53c01054d95
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "name": "更新部门2"
+}
+
+### 删除部门
+DELETE {{baseURL}}/dept/delete/681c36e25f49e53c01054d95
+Authorization: {{token}}
+
+### 部门列表
+POST {{baseURL}}/dept/list
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "page":1,
+  "limit":10,
+  "fields":"_id name",
+  "name":"1"
+}
