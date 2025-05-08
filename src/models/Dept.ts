@@ -29,4 +29,4 @@ const deptSchema = new mongoose.Schema<DeptDocument>(
   }
 );
 
-export const Dept = mongoose.model<DeptDocument>("Dept", deptSchema);
+export const Dept = mongoose.model<DeptDocument>("depts", deptSchema);

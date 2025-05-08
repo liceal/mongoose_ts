@@ -113,4 +113,57 @@ const getAll = async (req: Request, res: Response) => {
   }
 };
 
-export default { create, getOne, updateOne, deleteOne, getAll };
+const getAll2 = async (req: Request, res: Response) => {
+  try {
+    const body = req.body as GetAllQuery;
+    const page = parseInt(body.page as string) || 1;
+    const limit = parseInt(body.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    const query: any = {
+      name: { $regex: body.name || "", $options: "i" },
+      desc: { $regex: body.desc || "", $options: "i" },
+    };
+
+    if (body.parentId) {
+      query.parentId = body.parentId;
+    }
+
+    const pipeline = [
+      { $match: query },
+      {
+        $facet: {
+          data: [
+            { $skip: skip },
+            { $limit: limit },
+            {
+              $project: body.fields
+                ? body.fields
+                    .split(" ")
+                    .reduce((acc, field) => ({ ...acc, [field]: 1 }), {})
+                : {},
+            },
+          ],
+          total: [{ $count: "count" }],
+        },
+      },
+    ];
+
+    const [result] = await Dept.aggregate(pipeline);
+    const depts = result.data;
+    const total = result.total.length > 0 ? result.total[0].count : 0;
+    const totalPages = Math.ceil(total / limit);
+
+    res.status(200).json({
+      data: depts,
+      total,
+      totalPages,
+      currentPage: page,
+    });
+  } catch (err: any) {
+    console.error(err);
+    res.status(500).json({ error: "查询失败" });
+  }
+};
+
+export default { create, getOne, updateOne, deleteOne, getAll, getAll2 };

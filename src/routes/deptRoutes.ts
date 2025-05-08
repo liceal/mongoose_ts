@@ -17,6 +17,6 @@ router.put("/update/:id", UserController.protect, DeptController.updateOne);
 router.delete("/delete/:id", UserController.protect, DeptController.deleteOne);
 
 // 查询所有部门
-router.post("/list", UserController.protect, DeptController.getAll);
+router.post("/list", UserController.protect, DeptController.getAll2);
 
 export default router;

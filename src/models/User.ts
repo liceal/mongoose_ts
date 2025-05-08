@@ -70,4 +70,4 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-export const User = mongoose.model<UserDocument>("User", userSchema);
+export const User = mongoose.model<UserDocument>("users", userSchema);

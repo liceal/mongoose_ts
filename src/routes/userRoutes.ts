@@ -26,9 +26,9 @@ router.post("/register", async (req: { body: UserDocument }, res) => {
     const token = newUser.generateAuthToken();
 
     res.status(201).json({ message: "用户注册成功", token });
-  } catch (error) {
+  } catch (error: any) {
     console.error("注册失败", error);
-    res.status(500).json({ error: "注册失败" });
+    res.status(500).json({ error: "注册失败", message: error.message });
   }
 });
 

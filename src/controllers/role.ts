@@ -39,22 +39,46 @@ const getOne = async (req: Request, res: Response) => {
 // 查询所有角色
 const list = async (req: Request, res: Response) => {
   try {
-    // const roles = await Role.find().populate("departments");
-
-    // const data = await my_toList(Role, req, (model) => {
-    //   model.populate("departments");
-    // });
-
-    // const data = await my_toList(Role, req, (model) => {
-    //   return model.populate("departments", "_id name");
-    // });
-    // const data = await my_toList(
-    //   req,
-    // ).find().populate("departments", "_id name")
-
-    const data = await my_toList(req, Role.find(), (model) => {
-      return model.populate("departments");
-    });
+    const body = req.body;
+    const page = body.page || 1;
+    const limit = body.limit || 10;
+    const skip = (page - 1) * limit;
+    const data = await Role.aggregate([
+      { $match: { name: { $regex: body.name || "", $options: "i" } } },
+      {
+        $lookup: {
+          from: "depts", //我命名是Dept 会自动被转成小些加复数 就是depts，可以看数据库里的表
+          localField: "departments",
+          foreignField: "_id",
+          as: "deptDetails",
+        },
+      },
+      {
+        $facet: {
+          data: [
+            { $limit: limit },
+            { $skip: skip },
+            {
+              $project: {
+                _id: 1,
+                name: 1,
+                departments: 1,
+                deptDetails: 1,
+              },
+            },
+          ],
+          total: [{ $count: "count" }],
+        },
+      },
+      {
+        $project: {
+          data: 1,
+          total: { $arrayElemAt: ["$total.count", 0] },
+          page: { $literal: Math.floor(skip / limit) + 1 },
+          pageSize: { $literal: limit }, // 每页大小
+        },
+      },
+    ]);
 
     console.log(data);
 

@@ -1,5 +1,5 @@
 @baseURL = http://localhost:7100/api
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFjMWI4MGIyMGEyNmY1MjBlMGE4YmIiLCJpYXQiOjE3NDY2ODcxODgsImV4cCI6MTc0NjcxNTk4OH0.TiPz2iqqTCpO-x15_OFEIqpZCCXHcY2LUfw7JL8rbW0
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFjYTc5MmZmN2ZhNjdjNmIyNTRjZGEiLCJpYXQiOjE3NDY3MDgzNzAsImV4cCI6MTc0NjczNzE3MH0.UQMABUYizFqs4Af3_YjTK-2JCtQbEcRQLKsqqilOAt8
 
 ### 创建角色
 POST {{baseURL}}/role/create
@@ -7,16 +7,16 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "name": "角色1",
+  "name": "角色22",
   "description": "角色描述",
   "departments":[
-    "681c2533fb4d2ea4f9ad0788",
-    "681c273cf5b4171b94276da0"
+    "681cb4cb04414b740f0a948b",
+    "681cb4cf04414b740f0a948d"
   ]
 }
 
 ### 查询单个角色
-GET {{baseURL}}/role/get/681c5aba0021780679f609e8
+GET {{baseURL}}/role/get/681caa1a0b18e9828e7cb520
 Authorization: {{token}}
 
 ### 查询所有角色
@@ -26,6 +26,5 @@ Authorization: {{token}}
 
 {
   "page":1,
-  "limit":10,
-  "fields":"_id deparments"
+  "limit":10
 }
