@@ -2,6 +2,7 @@ import express from "express";
 import { UserDocument, User } from "../models/User";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import UserController from "../controllers/user";
 
 dotenv.config();
 
@@ -64,9 +65,9 @@ router.post("/login", async (req, res) => {
 });
 
 // 获取用户信息（需要鉴权）
-router.get("/me", authenticateToken, async (req, res) => {
+router.get("/me", UserController.protect, async (req, res) => {
   try {
-    const user = await User.findById((req as any).userId).select("-password");
+    const user = req.user as UserDocument;
     if (!user) {
       return res.status(404).json({ error: "用户未找到" });
     }
@@ -77,7 +78,7 @@ router.get("/me", authenticateToken, async (req, res) => {
 });
 
 // 获取用户列表（需要鉴权）
-router.get("/list", authenticateToken, async (req, res) => {
+router.get("/list", UserController.protect, async (req, res) => {
   try {
     const users = await User.find().select("-password");
     res.json(users);
@@ -85,19 +86,5 @@ router.get("/list", authenticateToken, async (req, res) => {
     res.status(500).json({ error: "获取用户列表失败" });
   }
 });
-
-// 中间件：验证 JWT token
-function authenticateToken(req: any, res: any, next: any) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) return res.status(401).json({ error: "未提供令牌" });
-
-  jwt.verify(token, process.env.JWT_SECRET!, (err: any, user: any) => {
-    if (err) return res.status(403).json({ error: "无效的令牌" });
-    req.userId = user.userId;
-    next();
-  });
-}
 
 export default router;

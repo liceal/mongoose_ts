@@ -20,10 +20,11 @@ Content-Type: application/json
 }
 
 ### 获取用户信息（需要鉴权）
-@token = <登录接口返回的token>
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFkYTM4ZjU3NDJiMDQ5MmNhMzFhOWYiLCJpYXQiOjE3NDY3NzI5ODAsImV4cCI6MTc0OTM2NDk4MH0.lbDbN9phkrRqYCgkd6ROW_4WrazLqBItX43dbkjxJF4
+
 GET {{baseURL}}/users/me
-Authorization: Bearer {{token}}
+Authorization: {{token}}
 
 ### 获取用户列表（需要鉴权）
 GET {{baseURL}}/users/list
-Authorization: Bearer {{token}}
+Authorization: {{token}}

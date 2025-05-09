@@ -64,7 +64,7 @@ userSchema.methods.generateAuthToken = function () {
     { userId: user._id } as jwtMsg,
     process.env.JWT_SECRET!,
     {
-      expiresIn: "8h",
+      expiresIn: "30d",
     }
   );
   return token;

@@ -44,21 +44,28 @@ const list = async (req: Request, res: Response) => {
     const limit = body.limit || 10;
     const skip = (page - 1) * limit;
     const data = await Role.aggregate([
-      { $match: { name: { $regex: body.name || "", $options: "i" } } },
+      // 先条件过滤
       {
-        $lookup: {
-          from: "depts", //我命名是Dept 会自动被转成小些加复数 就是depts，可以看数据库里的表
-          localField: "departments",
-          foreignField: "_id",
-          as: "deptDetails",
-        },
+        $match: { name: { $regex: body.name || "", $options: "i" } },
       },
       {
         $facet: {
+          // data数据获取
           data: [
+            // 再分页
             { $limit: limit },
             { $skip: skip },
             {
+              // 分页后的数据进行表关联
+              $lookup: {
+                from: "depts", //我命名是Dept 会自动被转成小些加复数 就是depts，可以看数据库里的表
+                localField: "departments",
+                foreignField: "_id",
+                as: "deptDetails",
+              },
+            },
+            {
+              // 对每一个数据进行结构更改 只要这四个字段
               $project: {
                 _id: 1,
                 name: 1,
@@ -67,10 +74,14 @@ const list = async (req: Request, res: Response) => {
               },
             },
           ],
+          // 总数获取
           total: [{ $count: "count" }],
         },
       },
       {
+        // 最后返回的数据更改结构
+        // $arrayElemAt 获取数组数据中的第一个元素
+        // $literal 字面量 固定值
         $project: {
           data: 1,
           total: { $arrayElemAt: ["$total.count", 0] },
@@ -79,8 +90,6 @@ const list = async (req: Request, res: Response) => {
         },
       },
     ]);
-
-    console.log(data);
 
     res.status(200).json(data);
   } catch (error: any) {

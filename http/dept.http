@@ -1,5 +1,5 @@
 @baseURL = http://localhost:7100/api
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFjYTc5MmZmN2ZhNjdjNmIyNTRjZGEiLCJpYXQiOjE3NDY3MDgzNzAsImV4cCI6MTc0NjczNzE3MH0.UQMABUYizFqs4Af3_YjTK-2JCtQbEcRQLKsqqilOAt8
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFkYTM4ZjU3NDJiMDQ5MmNhMzFhOWYiLCJpYXQiOjE3NDY3NzI5ODAsImV4cCI6MTc0OTM2NDk4MH0.lbDbN9phkrRqYCgkd6ROW_4WrazLqBItX43dbkjxJF4
 
 ### 创建部门
 POST {{baseURL}}/dept/create
@@ -7,23 +7,23 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "name": "测试部门4",
+  "name": "测试部门3",
   "parentId": "0",
   "desc": "测试部门描述"
 }
 
 
 ### 获取部门
-GET {{baseURL}}/dept/get/681c36e25f49e53c01054d95
+GET {{baseURL}}/dept/get/681da53c64e5dbb46c8c3e2f
 Authorization: {{token}}
 
 ### 更新部门
-PUT {{baseURL}}/dept/update/681c36e25f49e53c01054d95
+PUT {{baseURL}}/dept/update/681da53c64e5dbb46c8c3e2f
 Content-Type: application/json
 Authorization: {{token}}
 
 {
-  "name": "更新部门2"
+  "name": "更新部门3-1"
 }
 
 ### 删除部门
