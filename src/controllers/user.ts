@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { jwtMsg, User } from "../models/User";
 import NodeCache from "node-cache";
-import { MongooseError } from "mongoose";
 
 const userCache = new NodeCache({ stdTTL: 3600 }); // 缓存1小时
 

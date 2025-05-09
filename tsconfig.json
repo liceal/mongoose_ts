@@ -6,7 +6,10 @@
     "esModuleInterop": true, // 必须启用，避免 ES/CJS 互操作问题
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

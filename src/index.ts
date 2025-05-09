@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes";
 import deptRoutes from "./routes/deptRoutes";
 import roleRoutes from "./routes/roleRoutes";
+import captchaRoutes from "@/routes/captchaRoutes";
+// import cleanupCaptchasJob from "@/utils/cleanupCaptchas";
 
 dotenv.config();
 
@@ -27,8 +29,12 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/dept", deptRoutes);
 app.use("/api/role", roleRoutes);
+app.use("/api/common", captchaRoutes);
 
 // 启动服务器
 app.listen(PORT, () => {
   console.log(`服务器运行在 http://localhost:${PORT}`);
 });
+
+// 启动定时任务
+// cleanupCaptchasJob;

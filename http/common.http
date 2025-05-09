@@ -1,0 +1,16 @@
+###公共接口
+@baseURL = http://localhost:7100/api/common
+
+
+### 获取验证码
+
+GET {{baseURL}}/captcha
+
+### 验证二维码
+POST {{baseURL}}/captcha/verify
+Content-Type: application/json
+
+{
+  "id":"681db6f759adc1abbcf605d6",
+  "code":"E0q3"
+}

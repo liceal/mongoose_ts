@@ -1,6 +1,6 @@
 import express from "express";
 import { UserDocument, User } from "../models/User";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import UserController from "../controllers/user";
 

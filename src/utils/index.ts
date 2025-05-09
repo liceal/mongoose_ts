@@ -1,4 +1,4 @@
-import { Model, Query, QueryWithHelpers } from "mongoose";
+import { Query } from "mongoose";
 import { Request } from "express";
 
 export const my_toList = async <T>(
